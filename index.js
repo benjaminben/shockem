@@ -1,29 +1,49 @@
-const express = require("express")
-const sio     = require("socket.io")
-const nssh    = require("node-ssh")
+fs      = require("fs")
+express = require("express")
+sio     = require("socket.io")
+nssh    = require("node-ssh")
 
-const app = express()
+app = express()
 app.set("port", "7000")
 
-const server = app.listen(app.get("port"), () => {
+server = app.listen(app.get("port"), () => {
   console.log("listening on", app.get("port"))
 })
 
 app.get("/", (req, res) => {
-  console.log("hi /")
   res.sendFile(__dirname + "/shocker.html")
 })
 
-const io = sio(server)
-const show = io.of("/")
+const ssh = new nssh()
 
-const shock = () => {
+var shock = () => {
   console.log("shocking...")
+  ssh.execCommand(`${process.argv[1]}/shockem`).then((result) => {
+    console.log(`STDOUT: ${result.stdout}`)
+    console.log(`STDERR: ${result.stderr}`)
+  })
 }
 
-show.on("connection", (socket) => {
-  console.log("audience connected")
-  socket.on("shock", () => {
-    shock()
+var io
+var show
+
+initIo = () => {
+  io = sio(server)
+  show = io.of("/")
+
+  show.on("connection", (socket) => {
+    console.log("audie connected")
+    socket.on("shock", () => {
+      shock()
+    })
   })
+}
+
+ssh.connect({
+  host: process.argv[2],
+  username: process.argv[3],
+  privateKey: process.argv[4],
+})
+.then(() => {
+  initIo()
 })
