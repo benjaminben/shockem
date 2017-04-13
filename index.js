@@ -40,10 +40,10 @@ initIo = () => {
 }
 
 ssh.connect({
-  port: process.argv[2]
+  port: process.argv[2],
   username: process.argv[3],
   host: process.argv[4],
-  // privateKey: process.argv[4],
+  privateKey: process.argv[5],
 })
 .then(() => {
   initIo()
