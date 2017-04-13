@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>This Art Will Shock You</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+</head>
+<body>
+  <button id="shocker">shocking</button>
+  <script>
+    (function() {
+      var socket = io("/")
+      var shocker = document.getElementById("shocker")
+      shocker.addEventListener("click", function() {
+        console.log("shocking...")
+        socket.emit("shock")
+      })
+    })()
+  </script>
+</body>
+</html>
