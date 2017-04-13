@@ -18,7 +18,7 @@ const ssh = new nssh()
 
 var shock = () => {
   console.log("shocking...")
-  ssh.execCommand(`${process.argv[1]}/shockem`).then((result) => {
+  ssh.execCommand(`./shockem`).then((result) => {
     console.log(`STDOUT: ${result.stdout}`)
     console.log(`STDERR: ${result.stderr}`)
   })
@@ -40,9 +40,10 @@ initIo = () => {
 }
 
 ssh.connect({
-  host: process.argv[2],
+  port: process.argv[2]
   username: process.argv[3],
-  privateKey: process.argv[4],
+  host: process.argv[4],
+  // privateKey: process.argv[4],
 })
 .then(() => {
   initIo()
