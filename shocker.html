@@ -6,14 +6,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 </head>
 <body>
-  <button id="shocker">shocking</button>
+  <button id="shock_on">shock on</button>
+  <button id="shock_off">shock off</button>
   <script>
     (function() {
       var socket = io("/")
-      var shocker = document.getElementById("shocker")
-      shocker.addEventListener("click", function() {
-        console.log("shocking...")
-        socket.emit("shock")
+      var shock_on = document.getElementById("shock_on")
+      var shock_off = document.getElementById("shock_off")
+      shock_on.addEventListener("click", function() {
+        console.log("shock on")
+        socket.emit("shock_on")
+      })
+      shock_off.addEventListener("click", function() {
+        console.log("shock off")
+        socket.emit("shock_off")
       })
     })()
   </script>

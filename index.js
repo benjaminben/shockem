@@ -16,9 +16,16 @@ app.get("/", (req, res) => {
 
 const ssh = new nssh()
 
-var shock = () => {
+var shock_on = () => {
   console.log("shocking...")
-  ssh.execCommand(`./shockem`).then((result) => {
+  ssh.execCommand(`./shockon`).then((result) => {
+    console.log(`STDOUT: ${result.stdout}`)
+    console.log(`STDERR: ${result.stderr}`)
+  })
+}
+var shock_off = () => {
+  console.log("shocking...")
+  ssh.execCommand(`./shockoff`).then((result) => {
     console.log(`STDOUT: ${result.stdout}`)
     console.log(`STDERR: ${result.stderr}`)
   })
@@ -33,8 +40,11 @@ initIo = () => {
 
   show.on("connection", (socket) => {
     console.log("audie connected")
-    socket.on("shock", () => {
-      shock()
+    socket.on("shock_on", () => {
+      shock_on()
+    })
+    socket.on("shock_off", () => {
+      shock_off()
     })
   })
 }
