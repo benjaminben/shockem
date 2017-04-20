@@ -18,14 +18,14 @@ const ssh = new nssh()
 
 var shock_on = () => {
   console.log("shocking...")
-  ssh.execCommand(`./shockon`).then((result) => {
+  ssh.execCommand(`sudo ./shockon`).then((result) => {
     console.log(`STDOUT: ${result.stdout}`)
     console.log(`STDERR: ${result.stderr}`)
   })
 }
 var shock_off = () => {
   console.log("shocking...")
-  ssh.execCommand(`./shockoff`).then((result) => {
+  ssh.execCommand(`sudo ./shockoff`).then((result) => {
     console.log(`STDOUT: ${result.stdout}`)
     console.log(`STDERR: ${result.stderr}`)
   })
